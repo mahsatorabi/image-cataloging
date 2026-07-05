@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Image Cataloging
 
 A serverless web app that catalogs images in three AI-powered layers:
@@ -83,3 +84,7 @@ Workers AI includes **10,000 neurons/day** free. See [Workers AI pricing](https:
 ## License
 
 MIT
+=======
+# image-cataloging
+This web app would describe your image and extract its concepts. 
+>>>>>>> 364dfebb9616344a663b91ea1254e959c7d57d2d
