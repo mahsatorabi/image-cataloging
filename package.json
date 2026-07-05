@@ -1,0 +1,22 @@
+{
+	"name": "image-des",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"deploy": "wrangler deploy",
+		"dev": "wrangler dev",
+		"start": "wrangler dev",
+		"test": "vitest",
+		"cf-typegen": "wrangler types",
+		"setup:cloudflare": "wrangler d1 create image-catalog && wrangler r2 bucket create image-catalog",
+		"db:migrate:local": "wrangler d1 execute image-catalog --local --file=./schema.sql",
+		"db:migrate:remote": "wrangler d1 execute image-catalog --remote --file=./schema.sql"
+	},
+	"devDependencies": {
+		"@cloudflare/vitest-pool-workers": "^0.12.4",
+		"@cloudflare/workers-types": "^4.20260702.1",
+		"typescript": "^5.5.2",
+		"vitest": "~3.2.0",
+		"wrangler": "^3.101.0"
+	}
+}

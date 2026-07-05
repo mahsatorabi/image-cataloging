@@ -1,0 +1,23 @@
+{
+	"name": "image-des",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-03-01",
+	"observability": { "enabled": true },
+	"ai": {
+		"binding": "AI"
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "image-catalog",
+			"database_id": "417f576d-1aa4-4030-aa73-106a19d724e3"
+		}
+	],
+	// Enable R2 in Cloudflare Dashboard, create bucket "image-catalog", then uncomment:
+	// "r2_buckets": [
+	// 	{
+	// 		"binding": "IMAGES",
+	// 		"bucket_name": "image-catalog"
+	// 	}
+	// ]
+}
