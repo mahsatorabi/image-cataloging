@@ -1,9 +1,10 @@
 const VISION_MODEL = "@cf/meta/llama-3.2-11b-vision-instruct";
+const OBJECT_MODEL = "@cf/microsoft/resnet-50";
 
 export interface DetectedObject {
 	label: string;
 	score: number;
-	box: { xmin: number; ymin: number; xmax: number; ymax: number };
+	box?: { xmin: number; ymin: number; xmax: number; ymax: number };
 }
 
 export interface CatalogResult {
@@ -98,19 +99,21 @@ async function ensureVisionReady(ai: Ai): Promise<void> {
 }
 
 async function detectObjects(ai: Ai, image: ArrayBuffer): Promise<DetectedObject[]> {
-	try {
-		const result = await ai.run("@cf/facebook/detr-resnet-50", {
-			image: Array.from(new Uint8Array(image)),
-		});
-		return ((result as { results?: DetectedObject[] }).results ?? []).map((item) => ({
-			label: item.label,
-			score: item.score,
-			box: item.box,
-		}));
-	} catch (err) {
-		console.error("object detection failed:", err);
-		return [];
-	}
+	const result = await ai.run(OBJECT_MODEL, {
+		image: [...new Uint8Array(image)],
+	});
+
+	const items = Array.isArray(result)
+		? result
+		: ((result as { result?: Array<{ label?: string; score?: number }> }).result ?? []);
+
+	return items
+		.map((item) => ({
+			label: String(item.label ?? "unknown"),
+			score: Number(item.score ?? 0),
+		}))
+		.filter((item) => item.score >= 0.01)
+		.slice(0, 10);
 }
 
 async function describeAndConcepts(ai: Ai, image: ArrayBuffer): Promise<{ description: string; concepts: string[] }> {

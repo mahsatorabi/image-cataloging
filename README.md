@@ -2,7 +2,7 @@
 
 A serverless web app that catalogs images in three AI-powered layers:
 
-1. **Objects** — detected items with confidence scores (`@cf/facebook/detr-resnet-50`)
+1. **Objects** — image classification labels with confidence (`@cf/microsoft/resnet-50`)
 2. **Describe** — natural-language caption (`@cf/meta/llama-3.2-11b-vision-instruct`)
 3. **Concepts** — abstract themes and ideas (same vision model + `@cf/baai/bge-base-en-v1.5` embeddings)
 
@@ -14,7 +14,7 @@ Built on [Cloudflare Workers](https://workers.cloudflare.com/) with Workers AI, 
 
 ```
 Upload image → Worker API
-  ├─ Layer 1: DETR object detection
+  ├─ Layer 1: ResNet-50 image classification (objects)
   ├─ Layer 2+3: Llama Vision (description + concepts)
   └─ BGE embeddings → D1 database (semantic search)
 ```
